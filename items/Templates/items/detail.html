@@ -1,0 +1,51 @@
+{% extends 'core/base.html' %}
+
+{% block title %}{{ items.Patient_name }}{% endblock %}
+
+{% block content %}
+
+    
+
+    <div class="col-span-2 p-6 bg-gray-100 rounded-xl">
+        <h1 class="mb-6 text-3xl">{{ item.name }}</h1>
+        <p class="text-white-500"><strong>Id: </strong>{{ item.id }}</p>
+        <p class="text-white-500"><strong>Patient Name: </strong>{{ item.Patient_name }}</p>
+        <p class="text-white-500"><strong>Product Name: </strong>{{ item.Product_name }}</p>
+        <p class="text-white-500"><strong>Product Code: </strong>{{ item.Product_code }}</p>
+        <p class="text-white-500"><strong>Address: </strong>{{ item.Address }}</p>
+        <p class="text-white-500"><strong>Amount: </strong>{{ item.Amount }}</p>
+        <p class="text-white-500"><strong>Technician: </strong>{{ item.Technician }}</p>
+        <p class="text-white-500"><strong>Contact: </strong>{{ item.Contact }}</p>
+        <p class="text-white-500"><strong>Issue Date: </strong>{{ item.Issue_date }}</p>
+        <p class="text-white-500"><strong>Rent Start Date: </strong>{{ item.Rent_start_date }}</p>
+        <p class="text-white-500"><strong>Rent End Date: </strong>{{ item.Rent_end_date }}</p>
+        <p class="text-white-500"><strong>Referance: </strong>{{ item.Reference }}</p>
+        <p class="text-white-500"><strong>Vendor: </strong>{{ item.Vendor }}</p>
+
+        {% if request.user == item.created_by %}
+            <div class"mt-6 p-6 bg-white rounded-xl">
+                <a href="{% url 'items:edit' item.id %}" class="inline-block mt-6 px-6 py-3 text-lg font-semibold bg-teal-500 text-white rounded-xl hover:bg-teal-700">Edit</a>
+                <a href="{% url 'items:delete' item.id %}" class="inline-block mt-6 px-6 py-3 text-lg font-semibold bg-red-500 text-white rounded-xl hover:bg-red-700">Delete</a>
+            </div>
+        {% else %}
+            <a href="{% url 'conversation:new' item.id %}" class="inline-block mt-6 px-6 py-3 text-lg font-semibold bg-teal-500 text-white rounded-xl hover:bg-teal-700">Login</a>
+        {% endif %}
+    </div>
+</div>
+<div class="mt-6 px-6 py-12 bg-gray-100 rounded-xl">
+    <h2 class="mv-12 text-2xl text-center">Customers</h2>
+    
+    <div class="grid grid-cols-3 gap-3">
+        {% for items in related_items %}
+            <div>
+                <a href="{% url 'items:detail' items.id %}">
+
+                    <div class="p-6 bg-white rounded-b-xl">
+                        <h2 class="text-2xl">{{ items.Patient_name }}</h2>
+                    </div>
+                </a>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

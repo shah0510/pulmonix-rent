@@ -1,0 +1,47 @@
+{% extends 'core/base.html' %}
+
+{% block title %} {{ title }}{% endblock title %}
+
+{% block content %}
+<h1 class="mb-6 text-3xl" >{{ title }}</h1>
+<form method="post" action="." enctype="multipart/form-data" id="personForm" data-cities-url="{% url 'items:ajax_load_cities' %}">
+    
+    {% csrf_token %}
+
+    <div class="space-y-4">
+        {{ form.as_p }}
+    </div>
+    {% if form.errors or form.non_field_errors %}
+        <div cass="mb-3 p-6 bg-red-400 rounded-xl">
+            {% for field in form  %}
+                {{ field.errors }}
+            {% endfor %}
+
+            {{ form.non_field_errors }}
+        </div>
+    {% endif %}
+    <button class="mt-6 py-4 px-8 text-lg bg-teal-500 hover:bg-teal-700 rounded-xl text-white">Submit</button>
+</form>
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<script>
+    $("#id_Product_name").change(function () {
+        const url = $("#personForm").attr("data-cities-url");  // get the url of the `load_cities` view
+        const Product_nameId = $(this).val();  // get the selected Product_name ID from the HTML input
+
+        $.ajax({                       // initialize an AJAX request
+            url: url,                    // set the url of the request (= /persons/ajax/load-cities/ )
+            data: {
+                'Product_name_id': Product_nameId       // add the Product_name id to the GET parameters
+            },
+            success: function (data) { 
+                console.log(data);  // `data` is the return of the `load_cities` view functionx    
+                $("#id_Product_code").html(data);  
+
+    
+            }
+        });
+
+    });
+</script>
+
+{% endblock content %}

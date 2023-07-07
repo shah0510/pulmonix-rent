@@ -1,0 +1,121 @@
+{% comment %} {% extends 'core/base.html' %} {% endcomment %}
+
+
+
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <script src="https://cdn.tailwindcss.com"></script>
+
+        <title>{% block title %}Details{% endblock %} </title>
+        {% load static %}
+        <link rel="shortcut icon" type="image/png" href="{% static 'favicon.ico' %}"/>
+    </head>
+  <style>
+      @media print{
+                .print-container{
+          position: absolute;
+          left: 0px;
+          top: 0px;
+          {% comment %} visibility: visible; {% endcomment %}
+        }
+      }
+    </style>  
+    <body>
+        <nav class="py-6 px-6 flex justify-between items-center border-b border-gray-200">
+            <a href="/" class="text-xl font-semibold">PULMONIX</a>
+            <div class="space-x-6">
+                <a href="{% url 'items:new' %}" class="text-lg font-semibold hover:text-gray-500">Agent</a>
+                <a href="{% url 'items:items' %}" class="text-lg font-semibold hover:text-gray-500">Payment Due</a>
+                {% if request.user.is_authenticated %}
+                    <a href="{% url 'conversation:inbox' %}" class="px-6 py-3 text-lg font-semibold bg-teal-500 text-white rounded-xl hover:bg-teal-700">Inbox</a>
+                    <a href="{% url 'dashboard:index' %}" class="px-6 py-3 text-lg font-semibold bg-gray-500 text-white rounded-xl hover:bg-gray-700">Dashboard</a>
+                    <a href="http://127.0.0.1:8000/admin" class="px-6 py-3 text-lg font-semibold bg-gray-500 text-white rounded-xl hover:bg-gray-700">Admin</a>
+                {% else %}
+                    <a href="{% url 'core:signup' %}" class="px-6 py-3 text-lg font-semibold bg-teal-500 text-white rounded-xl hover:bg-teal-700">Sign Up</a>
+                    <a href="{% url 'core:login' %}" class="px-6 py-3 text-lg font-semibold bg-gray-500 text-white rounded-xl hover:bg-gray-700">Sign In</a>
+                {% endif %}
+            </div>
+        </nav>
+        <div class="px-6 py-6">
+          
+
+
+          <div class="bg-gray-100 rounded-xl ">
+              <h2 class="mv-12 text-2xl  text-center font-semibold">Patient Details</h2>
+              
+                <a href="#" onclick="window.print()" class="btn btn-info"><i class="material-icons">&#xE24D;</i> <span>Print</span></a>
+              {% comment %} <div class="grid grid-cols-3 gap-3"> {% endcomment %}
+                
+                <div class="text-center print-container">
+                  <table class="table w-full bg-white border-collapse">
+                      <thead>
+                        <tr class="row space-x-2">
+                          <th class="borderborder-spacing-x-10 border-slate-940">Id</th>
+                          <th class="border border-slate-940">Patient_name</th>
+                          <th class="border border-slate-940">Product_code</th>
+                          <th class="border border-slate-940">Vendor</th>
+                          <th class="border border-slate-940">Product_name</th>
+                          <th class="border border-slate-940">Issue_date</th>
+                          <th class="border border-slate-940 ">Rent_start_date</th>
+                          <th class="border border-slate-940">Rent_end_date</th>
+                          <th class="border border-slate-940">Amount</th>
+                          <th class="border border-slate-940">Technician</th>
+                          <th class="border border-slate-940">Contact</th>
+                          <th class="border border-slate-940">Reference</th>
+                          <th class="border border-slate-940">Address</th>
+                       <th class="border border-slate-940"></th>
+                        </tr>
+                      </thead>
+                  {% for items in items %}
+                      {% comment %} <div> {% endcomment %}
+                          {% comment %} <a href="{% url 'items:detail' items.id %}"> {% endcomment %}
+      
+                              <tbody>
+                                  <tr class="row space-x-6">
+                                    
+                              <span>      <td class="border border-slate-1000 -order-1">{{ items.id }}</td></span>
+                                    <td class="border border-slate-1000">{{ items.Patient_name }}</td>
+                                    
+                                    <td class="border border-slate-1000 ">{{ items.Product_code }}</td>
+                                    <td class="border border-slate-1000">{{ items.Vendor }}</td>
+                                    <td class="border border-slate-1000">{{ items.Product_name }}</td>
+                                    <td class="border border-slate-1000">{{ items.Issue_date }}</td>
+                                    <td class="border border-slate-1000 border-spacing-x-10">{{ items.Rent_start_date }}</td>
+                                    <td class="border border-slate-1000">{{ items.Rent_end_date }}</td>
+                                    <td class="border border-slate-1000">{{ items.Amount }}</td>
+                                    <td class="border border-slate-1000">{{ items.Technician }}</td>
+                                    <td class="border border-slate-1000">{{ items.Contact }}</td>
+                                    <td class="border border-slate-1000">{{ items.Reference }}</td>
+                                    <td class="border border-slate-1000">{{ items.Address }}</td>
+                                    {% comment %} <td class="px-6 py-4 text-right border border-slate-1000">
+                                      <a href="{% url 'items:detail' items.id %}" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</a>
+                                  </td>      {% endcomment %}
+      
+                                  </tr>
+                              </tbody>
+                              
+                              {% comment %} <div class="p-6 bg-white rounded-b-xl">
+                                  <h2 class="text-2xl">{{ items.Patient_name }}</h2>
+                              </div>
+                              <div class="p-6 bg-white rounded-b-xl">
+                                  <h2 class="text-2xl">{{ items.Product_name }}</h2>
+                              </div> {% endcomment %}
+                              
+                      {% comment %} </div> {% endcomment %}
+                  {% endfor %}
+              {% comment %} </div> {% endcomment %}
+          </table>
+        </div>
+      
+          </div>
+      
+      
+        </div>
+    </div>
+
+        
+    </body>
+</html>

@@ -1,0 +1,60 @@
+{% extends 'core/base.html' %}
+
+{% block title %}Welcome{% endblock %}
+
+{% block content %}
+  <div class="mt-6 px-6 py-12 bg-gray-100 rounded-xl">
+        <h2 class="mv-12 text-2xl text-center">Technician</h2>
+        
+        <div class="grid grid-cols-3 gap-3">
+            {% for Technician in tech %}
+            <div>
+                <a href="#">
+                  
+                    <div class="p-6 bg-white rounded-b-xl {% if Technician.id == tech_id %} bg-gray-200 {% endif %} ">
+                        <a  class="text-2xl" href="{% url 'core:items' %}?query={{ query }}&Technician={{ Technician.id }}">{{ Technician.name }}</a>
+                        {% comment %} <h2 class="text-2xl">{{ category.name }}</h2>  </a> {% endcomment %}
+                         <p class="text-gray-500">{{ Technician.items.count }} items</p>
+                   
+                    </div>
+                </a>
+                
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+    
+
+    <div class="mt-6 px-6 py-12 bg-gray-100 rounded-xl">
+        <h2 class="mv-12 text-2xl text-center font-semibold">Products</h2>
+        <br>
+        <div class="grid grid-cols-3 gap-3">
+            {% for Product_name in categories %}
+                <div>
+                    <a href="#">
+                      
+                        <div class="p-6 bg-white rounded-b-xl {% if Product_name.id == product_id %} bg-gray-200 {% endif %} ">
+                            <a  class="text-2xl" href="{% url 'core:items' %}?query={{ query }}&Product_name={{ Product_name.id }}">{{ Product_name.name }}</a>
+                            {% comment %} <h2 class="text-2xl">{{ category.name }}</h2>  </a> {% endcomment %}
+                             <p class="text-gray-500">{{ Product_name.items.count }} items</p>
+                       
+                        </div>
+                    </a>
+                    
+                </div>
+            {% endfor %}
+            <div class="p-6 bg-white rounded-b-xl">
+                <h2 class="text-2xl">On Rent</h2>
+                <p class="text-gray-500">{{ items.count}} items</p>
+            </div>
+            <div class="p-6 bg-white rounded-b-xl">
+                <h2 class="text-2xl">Office</h2>
+                <p class="text-gray-500">{{ item_quantity}} items</p>
+            </div>
+            <div class="p-6 bg-white rounded-b-xl">
+                <h2 class="text-2xl">Total</h2>
+                <p class="text-gray-500">{{ items_count}} items</p>
+            </div>
+        </div>
+    </div>
+{% endblock %}
